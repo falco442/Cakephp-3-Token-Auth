@@ -73,3 +73,11 @@ and the `$user` variable returned by the `identify()` method is like
     }
 }
 ```
+
+The field `token` returned is the token that you can use in your REST calls, for example
+
+```
+GET /posts.json?token=041edde838591602ceca3576e845b94fe40511dd
+```
+
+if you want to make an action public, you can just use `$this->Auth->allow(['actionName']);` in your controller.
