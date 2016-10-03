@@ -22,19 +22,18 @@ class TokenAuthenticate extends FormAuthenticate
 
     public function authenticate(Request $request, Response $response){
     	$user = parent::authenticate($request,$response);
-    	if(!$user)
+    	if(!$user){
     		return $user;
+    	}
 
     	$table = TableRegistry::get($this->_config['userModel']);
     	$entity = $table->get($user[$table->primaryKey()]);
 
-    	if($entity = $table->patchEntity($entity,$user,[
-    			'fieldList'=>['id','token']
-    		])){
-	    	$user['token'] = 'asdasd';
-	    	if(!$table->save($entity)){
+    	$entity->token = sha1(Text::uuid());
+    	unset($entity->{$this->_config['fields']['password']});
+
+    	if(!$table->save($entity)){
 	    		$user = false;
-	    	}
     	}
     	return $user;
     }
