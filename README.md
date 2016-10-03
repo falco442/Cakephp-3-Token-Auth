@@ -25,3 +25,15 @@ public $components = [
 ## Customization
 
 You can customize the Component as you would have done for the FormAuthentication one, like changing the `userModel` config, or the `fields` config
+
+## Login action
+
+You may want to login the user to obtain the token (stored in the user array returned): you can call `$this->Auth->identify($this->request,$this->response)` in the `login` action of your `UsersController` controller, like this:
+
+```PHP
+public function login(){
+	$user = $this->Auth->identify($this->request,$this->response);
+	$this->set(compact('user'));
+	$this->set('_serialize',['user']);
+}
+```
