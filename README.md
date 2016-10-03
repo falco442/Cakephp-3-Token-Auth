@@ -37,3 +37,39 @@ public function login(){
 	$this->set('_serialize',['user']);
 }
 ```
+
+the data in the request must be of the form
+
+```PHP
+array(
+	'User'=>array(
+		'<username-field>'=>'<username>',
+		'<password-field>'=>'<password>'
+	)
+)
+```
+
+or in the JSON format
+
+```javascript
+{
+	"User": {
+		"<username-field>":"<username>",
+		"<password-field>":"<password>"
+	}
+}
+```
+
+and the `$user` variable returned by the `identify()` method is like
+
+```javascript
+{
+    "user": {
+        "id": "12",
+        "username": "amazin-user",
+        "token": "041edde838591602ceca3576e845b94fe40511dd",
+        "created": "2016-10-03 17:39:04",
+        "modified": "2016-10-03 17:39:04"
+    }
+}
+```
