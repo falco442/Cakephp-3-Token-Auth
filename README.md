@@ -13,4 +13,12 @@ This little Custom Authorize Object make possible to login in a CakePHP applicat
 
 Copy the file into `cakephp-root/src/Auth/` and load the AuthComponent into your `cakephp-root/src/Controller/AppController.php`, using this Object:
 
-
+```php
+$this->loadComponent('Auth',[
+    'authenticate'=>[
+        'Token'
+    ],
+    'unauthorizedRedirect' => false,
+    'storage' => 'Memory',
+]);
+```
