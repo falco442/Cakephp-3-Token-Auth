@@ -62,9 +62,3 @@ class TokenAuthenticate extends FormAuthenticate {
 		return $result[$model];
 	}
 }
-
-<<<<<<< HEAD
-?>
-=======
-?>
->>>>>>> 447f347cd67bbe907f270809ee5107ea4d631aad
