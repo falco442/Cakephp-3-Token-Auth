@@ -22,3 +22,6 @@ $this->loadComponent('Auth',[
     'storage' => 'Memory',
 ]);
 ```
+## Customization
+
+You can customize the Component as you would have done for the FormAuthentication one, like changing the `userModel` config, or the `fields` config
