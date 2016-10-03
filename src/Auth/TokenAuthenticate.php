@@ -12,7 +12,7 @@ class TokenAuthenticate extends FormAuthenticate
     public function getUser(Request $request){
     	if(!$request->query('token'))
     		return false;
-    	$table = TableRegistry::get('Users');
+    	$table = TableRegistry::get($this->_config['userModel']);
     	$user = $table->findByToken($request->query('token'))->first()->toArray();
     	return $user;
     }
