@@ -7,6 +7,7 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+use Cake\I18n\Time;
 
 class TokenAuthenticate extends FormAuthenticate
 {
@@ -17,7 +18,7 @@ class TokenAuthenticate extends FormAuthenticate
     	$user = $table->findByToken($request->query('token'))->first();
     	if(!$user)
     		return false;
-    	return $user;
+    	return $user->toArray();
     }
 
     public function authenticate(Request $request, Response $response){
@@ -29,13 +30,25 @@ class TokenAuthenticate extends FormAuthenticate
     	$table = TableRegistry::get($this->_config['userModel']);
     	$entity = $table->get($user[$table->primaryKey()]);
 
-    	$entity->token = sha1(Text::uuid());
+    	$entity->token = $token = sha1(Text::uuid());
+        $entity->token_created = $token_created = Time::now();
     	unset($entity->{$this->_config['fields']['password']});
 
     	if(!$table->save($entity)){
 	    		$user = false;
     	}
+        $user['token'] = $token;
+        $user['token_created'] = $token_created;
     	return $user;
+    }
+
+    public function unauthenticated(Request $request, Response $response){
+        $status = 0;
+        $response->statusCode(403);
+        $error = "You're not authorized";
+        $response->body(json_encode(compact('error','status')));
+        $response->type('json');
+        return $response;
     }
 
 }
